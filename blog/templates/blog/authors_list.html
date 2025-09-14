@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <h2>Authors</h2>
+
+  <ul class="list-unstyled">
+    {% for user in authors %}
+      <li class="mb-2">
+        <a href="{% url 'post_by_author' username=user.username %}">
+          {{ user.username }}
+        </a>
+        <small class="text-muted">· {{ user.published_count }} published post{{ user.published_count|pluralize }}</small>
+      </li>
+    {% empty %}
+      <li>No authors yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
