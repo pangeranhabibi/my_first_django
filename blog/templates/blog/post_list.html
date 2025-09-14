@@ -6,6 +6,13 @@
     <article class="post">
       <time class="date">published: {{ post.published_date }}</time>
       <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+      <h2>
+          {% if selected_author %}
+            Posts by {{ selected_author }}
+          {% else %}
+            Published
+          {% endif %}
+      </h2>
       <p>{{ post.text|linebreaksbr }}</p>
     </article>
   {% empty %}
