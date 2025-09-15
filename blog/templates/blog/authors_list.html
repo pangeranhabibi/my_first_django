@@ -1,18 +1,36 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <h2>Authors</h2>
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
 
-  <ul class="list-unstyled">
-    {% for user in authors %}
-      <li class="mb-2">
-        <a href="{% url 'post_by_author' username=user.username %}">
-          {{ user.username }}
-        </a>
-        <small class="text-muted">· {{ user.published_count }} published post{{ user.published_count|pluralize }}</small>
-      </li>
-    {% empty %}
-      <li>No authors yet.</li>
-    {% endfor %}
-  </ul>
+        <div class="card shadow-sm rounded-3">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Authors</h3>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            {% for user in authors %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <a href="{% url 'post_by_author' username=user.username %}" class="fw-bold text-decoration-none">
+                    {{ user.username }}
+                  </a>
+                </div>
+                <span class="badge bg-secondary rounded-pill">
+                  {{ user.published_count }} post{{ user.published_count|pluralize }}
+                </span>
+              </li>
+            {% empty %}
+              <li class="list-group-item text-muted text-center">
+                No authors yet.
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
 {% endblock %}
