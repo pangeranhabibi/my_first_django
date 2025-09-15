@@ -1,21 +1,42 @@
-<!-- blog/templates/blog/post_list.html -->
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  {% for post in posts %}
-    <article class="post">
-      <time class="date">published: {{ post.published_date }}</time>
-      <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-      <h2>
-          {% if selected_author %}
-            Posts by {{ selected_author }}
-          {% else %}
-            Published
-          {% endif %}
-      </h2>
-      <p>{{ post.text|linebreaksbr }}</p>
-    </article>
-  {% empty %}
-    <p>Belum ada post.</p>
-  {% endfor %}
+  <div class="container py-3">
+    <h2 class="mb-4">
+      {% if selected_author %}
+        Posts by {{ selected_author }}
+      {% else %}
+        Published Posts
+      {% endif %}
+    </h2>
+
+    <div class="row g-4">
+      {% for post in posts %}
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <a href="{% url 'post_detail' pk=post.pk %}" class="text-decoration-none text-dark">
+                  {{ post.title }}
+                </a>
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                By {{ post.author.username }} · {{ post.published_date|date:"M d, Y" }}
+              </h6>
+              <p class="card-text mt-2">
+                {{ post.text|truncatechars:150 }}
+              </p>
+              <div class="mt-auto">
+                <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-sm btn-primary">
+                  Read more
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No posts yet.</p>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
